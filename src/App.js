@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
+import { Cabecera } from "./componentes/Cabecera";
+import { ContactoPagina } from "./paginas/ContactoPagina";
+import { FormularioPagina } from "./paginas/FormularioPagina";
+import { ListadoPagina } from "./paginas/ListadoPagina";
+import { NotFoundPagina } from "./paginas/NotFoundPagina";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="container contenedor">
+        <Cabecera />
+        <main className="principal row">
+          <Switch>
+            <Route path="/listado" exact>
+              <ListadoPagina />
+            </Route>
+            <Route path="/nuevo" exact>
+              <FormularioPagina />
+            </Route>
+            <Route path="/editar/:id" exact>
+              <FormularioPagina />
+            </Route>
+            <Route path="/contacto" exact>
+              <ContactoPagina />
+            </Route>
+            <Route path="/" exact>
+              <Redirect to="/listado" />
+            </Route>
+            <Route path="**">
+              <NotFoundPagina />
+            </Route>
+          </Switch>
+        </main>
+      </div>
+    </Router>
   );
 }
 
